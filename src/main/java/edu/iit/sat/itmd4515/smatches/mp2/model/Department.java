@@ -5,19 +5,30 @@
  */
 package edu.iit.sat.itmd4515.smatches.mp2.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  *
  * @author ALLAH
  */
 public class Department {
     
-    private int deptId;
+    @NotNull
+    @Size(max = 4)
+    private String deptId;
 
+    @NotNull
+        @Size(max = 40)
     private String deptName;
 
-    public Department(int deptId, String deptName) {
+    public Department(String deptId, String deptName) {
         this.deptId = deptId;
         this.deptName = deptName;
+    }
+
+    public Department() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -48,7 +59,7 @@ public class Department {
      *
      * @return the value of deptId
      */
-    public int getDeptId() {
+    public String getDeptId() {
         return deptId;
     }
 
@@ -57,7 +68,7 @@ public class Department {
      *
      * @param deptId new value of deptId
      */
-    public void setDeptId(int deptId) {
+    public void setDeptId(String deptId) {
         this.deptId = deptId;
     }
 

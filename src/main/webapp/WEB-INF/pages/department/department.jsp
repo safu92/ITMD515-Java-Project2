@@ -1,71 +1,47 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="/WEB-INF/header.jspf" %>
 
-<h1>I am employee.jsp</h1>
+<h1>I am department.jsp</h1>
 
-<c:if test="${not empty requestScope.employee}">
-    <h2>${requestScope.employee.firstName} ${requestScope.employee.lastName}</h2>
+<c:if test="${not empty requestScope.department}">
+    <h2>${requestScope.department.deptId} ${requestScope.department.deptName}</h2>
 </c:if>
 
-<c:choose>
-    <c:when test="${requestScope.readonly ne 'readonly'}">
-        <form action="${pageContext.request.contextPath}${not empty requestScope.employee ? '/employee/update' : '/employee/new'}" method="post">
-        </c:when>
-        <c:otherwise>
-            <form>
-            </c:otherwise>
-        </c:choose>
+    <c:if test="${not empty requestScope.department}">
+        <form action="${pageContext.request.contextPath}/department/update" method="get">
+    </c:if>
+    <c:if test="${requestScope.department==null}">
+        <form action="${pageContext.request.contextPath}/department/new" method="get">
+    </c:if>
         <div class="row">
-            <div class="large-4 columns">
-                <label>Employee ID
-                    <input type="text" placeholder="Employee ID" id="id" name="id" value="${employee.employeeId}" />
+            <div class="large-6 columns">
+                <label>Department ID
+                    <c:if test="${not empty requestScope.department}">
+                    <input type="text" placeholder="Department ID" id="deptId" name="deptId" value="${department.deptId}" readonly/>
+                    </c:if>
+                    <c:if test="${requestScope.department==null}">
+                    <input type="text" placeholder="Department ID" id="deptId" name="deptId" value="${department.deptId}"/>
+                    </c:if>
                 </label>
             </div>
-            <div class="large-4 columns">
-                <label>First Name
-                    <input type="text" placeholder="First Name" id="firstName" name="firstName" value="${employee.firstName}"/>
+            <div class="large-6 columns">
+                <label>Department Name
+                    <input type="text" placeholder="Department Name" id="deptName" name="deptName" value="${department.deptName}"/>
                 </label>
             </div>
-            <div class="large-4 columns">
-                <label>Last Name
-                    <input type="text" placeholder="Last Name" id="lastName" name="lastName" value="${employee.lastName}"/>
-                </label>
-            </div>
+        
         </div>
-        <div class="row">
-            <div class="large-12 columns">
-                <label>Email
-                    <input type="email" placeholder="Email Address" id="email" name="email" value="${employee.email}"/>
-                </label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="large-12 columns">
-                <label>Company
-                    <select id="param5" name="company">
-                        <option ${employee.company eq "husker" ? "selected" : "" } value="husker">Husker</option>
-                        <option ${employee.company eq "starbuck" ? "selected" : "" } value="starbuck">Starbuck</option>
-                        <option ${employee.company eq "hotdog" ? "selected" : "" } value="hotdog">Hot Dog</option>
-                        <option ${employee.company eq "apollo" ? "selected" : "" } value="apollo">Apollo</option>
-                    </select>
-                </label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="large-12 columns">
-                <label>Address
-                    <textarea id="address" name="address" placeholder="Employee Address" value="${employee.address}"></textarea>
-                </label>
-            </div>
-        </div>
+        
 
-        <c:if test="${requestScope.readonly ne 'readonly'}">
             <div class="row">
                 <div class="large-12 columns">
-                    <button class="button">Save</button>
+                    <input type="submit" class="button" Value="Save"/>
+
+                   
+
+                    
                 </div>
             </div>
-        </c:if>
     </form>    
 
 

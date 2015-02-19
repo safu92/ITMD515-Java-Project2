@@ -53,7 +53,7 @@ public class DepartmentDAO {
 
             while (rs.next()) {
                
-            departments.add(new Department(rs.getInt("dept_no"),
+            departments.add(new Department(rs.getString("dept_no"),
                         rs.getString("dept_name")));
             }
 
@@ -68,41 +68,78 @@ public class DepartmentDAO {
       }
     }
     
-    public Employee findById(Long id) {
+    public Department findById(String id) {
 
         try (Connection c = dataSource.getConnection()) {
-            PreparedStatement ps = c.prepareStatement("select * from employees where emp_no = ?");
-            ps.setLong(1, id);
+            PreparedStatement ps = c.prepareStatement("select * from departments where dept_no = ?");
+            ps.setString(1, id);
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return new Employee(rs.getInt("emp_no"),
-                        rs.getString("first_name"),
-                        rs.getString("last_name"));
+                return new Department(rs.getString("dept_no"),
+                        rs.getString("dept_name"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Department.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;
     }
 
-    public boolean save(Employee employee) {
+    public boolean updateDepartment(String id, String name) {
         try (Connection c = dataSource.getConnection()) {
-            PreparedStatement ps = c.prepareStatement("update customer set field = ?, field2 = ? where CustomerId = ?");
-            ps.setLong(1, employee.getEmpId());
+            PreparedStatement ps = c.prepareStatement("update departments set dept_name = ? where dept_no=?");
+            ps.setString(1, name);
+            ps.setString(2, id);
             // and so forth
             if (ps.executeUpdate() == 1) {
                 return true;
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DepartmentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return false;
 
     }
 
+    
+    public boolean newDepartment(String id,String name) {
+        try (Connection c = dataSource.getConnection()) {
+            PreparedStatement ps = c.prepareStatement("insert into departments values(?,?)");
+            ps.setString(1, id);
+            ps.setString(2, name);
+            // and so forth
+            if (ps.executeUpdate() == 1) {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DepartmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
+
+    }
+    
+    
+    public boolean deleteDepartment(String id) {
+        try (Connection c = dataSource.getConnection()) {
+            PreparedStatement ps = c.prepareStatement("delete from departments where dept_no=?");
+            ps.setString(1, id);
+            
+            // and so forth
+            if (ps.executeUpdate() == 1) {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DepartmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
+
+    }
     
 }

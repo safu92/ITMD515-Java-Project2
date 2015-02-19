@@ -20,7 +20,9 @@ import javax.validation.Validator;
 
     @WebServlet(name = "DepartmentController", urlPatterns = {
     "/department",
-    "/departments"
+    "/departments",
+    "/department/delete",
+    
 })
 public class DepartmentController extends HttpServlet {
     
@@ -47,21 +49,24 @@ public class DepartmentController extends HttpServlet {
                 request.setAttribute("departments", departmentDao.findDepartments());
                 request.getRequestDispatcher("/WEB-INF/pages/department/departments.jsp").forward(request, response);
                 break;
-           case "/employee":
-             LOG.info("Dispatching to /employee");
-  //if (request.getParameter("id")!=null) {
-    //                Long id = Long.parseLong(request.getParameter("id"));
-      //              request.setAttribute("employee", employeeDao.findById(id));
-        //            request.setAttribute("readonly", "readonly");
-          //      }
+           case "/department":  
+             LOG.info("Dispatching to /department");
+  if (request.getParameter("id")!=null) {
+                  String id = request.getParameter("id");
+                request.setAttribute("department", departmentDao.findById(id));
+              request.setAttribute("readonly", "readonly");
+        }
 
-               
-
-           LOG.warning("ID was not passed as a parameter.  Must be a new customer.");
+           LOG.warning("ID was not passed as a parameter.  Must be a new department.");
 //                messages.put("No ID Error", "This is a message from your controller.  Please enter an ID.");
 //                throw new ServletException("No ID was passed.  Try again!");
 
-               request.getRequestDispatcher("/WEB-INF/pages/employee/employee.jsp").forward(request, response);
+               request.getRequestDispatcher("/WEB-INF/pages/department/department.jsp").forward(request, response);
+               break;
+               
+               
+           case "/department/delete":
+            request.getRequestDispatcher("/WEB-INF/pages/department/deleteDepartment.jsp").forward(request, response);
                break;
         }
 

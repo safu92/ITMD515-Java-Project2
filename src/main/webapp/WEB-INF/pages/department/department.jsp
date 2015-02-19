@@ -18,7 +18,7 @@
         <div class="row">
             <div class="large-4 columns">
                 <label>Employee ID
-                    <input type="text" placeholder="Employee ID" id="id" name="id" value="${employee.empId}" />
+                    <input type="text" placeholder="Employee ID" id="id" name="id" value="${employee.employeeId}" />
                 </label>
             </div>
             <div class="large-4 columns">
@@ -32,9 +32,33 @@
                 </label>
             </div>
         </div>
-        
-        
-        
+        <div class="row">
+            <div class="large-12 columns">
+                <label>Email
+                    <input type="email" placeholder="Email Address" id="email" name="email" value="${employee.email}"/>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>Company
+                    <select id="param5" name="company">
+                        <option ${employee.company eq "husker" ? "selected" : "" } value="husker">Husker</option>
+                        <option ${employee.company eq "starbuck" ? "selected" : "" } value="starbuck">Starbuck</option>
+                        <option ${employee.company eq "hotdog" ? "selected" : "" } value="hotdog">Hot Dog</option>
+                        <option ${employee.company eq "apollo" ? "selected" : "" } value="apollo">Apollo</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>Address
+                    <textarea id="address" name="address" placeholder="Employee Address" value="${employee.address}"></textarea>
+                </label>
+            </div>
+        </div>
+
         <c:if test="${requestScope.readonly ne 'readonly'}">
             <div class="row">
                 <div class="large-12 columns">

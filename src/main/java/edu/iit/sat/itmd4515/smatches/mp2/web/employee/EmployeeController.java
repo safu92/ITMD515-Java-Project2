@@ -5,15 +5,15 @@
  */
 package edu.iit.sat.itmd4515.smatches.mp2.web.employee;
 
-import edu.iit.sat.itmd4515.smatches.mp2.service.CrmService;
-import edu.iit.sat.itmd4515.smatches.mp2.service.CrmServiceImpl;
 import edu.iit.sat.itmd4515.smatches.mp2.service.EmployeeDAO;
-import edu.iit.sat.itmd515.smatches.util.WebUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -24,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import javax.validation.Validator;
 
 /**
@@ -38,15 +39,14 @@ import javax.validation.Validator;
 })
 public class EmployeeController extends HttpServlet {
     
-    @EJB
-    private CrmService svc;
-    
+  
     
     @Resource
     Validator validator;
  
     @Inject
     EmployeeDAO employeeDao;
+       
 
     private static final Logger LOG
             = Logger.getLogger(EmployeeController.class.getName());
@@ -54,21 +54,17 @@ public class EmployeeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         LOG.info("Inside doGet");
-
-        Map<String, String> messages = new HashMap<>();
-        request.setAttribute("messages", messages);
-
         switch (request.getServletPath()) {
             case "/employees":
                 LOG.info("Dispatching to /employees");
-                request.setAttribute("employees", svc.findEmployees());
+                    response.setContentType("text/html");
+                request.setAttribute("employees", employeeDao.findEmployees());
                 request.getRequestDispatcher("/WEB-INF/pages/employee/employees.jsp").forward(request, response);
                 break;
            case "/employee":
              LOG.info("Dispatching to /employee");
-  if (!WebUtil.isEmpty(request.getParameter("id"))) {
+  if (request.getParameter("id")!=null) {
                     Long id = Long.parseLong(request.getParameter("id"));
                     request.setAttribute("employee", employeeDao.findById(id));
                     request.setAttribute("readonly", "readonly");

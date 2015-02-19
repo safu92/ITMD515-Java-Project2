@@ -12,7 +12,7 @@
         </tr>
     </thead>
     <tbody>
-        <c:forEach items="${requestScope.employees}" var="employee">
+        <c:forEach items="${employees}" var="employee">
             <tr>
                 <td>${employee.empId}</td>
                 <td>${employee.firstName}</td>

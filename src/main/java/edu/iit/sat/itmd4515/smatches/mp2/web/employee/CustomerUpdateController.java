@@ -6,7 +6,6 @@
 package edu.iit.sat.itmd4515.smatches.mp2.web.employee;
 
 import edu.iit.sat.itmd4515.smatches.mp2.model.Employee;
-import edu.iit.sat.itmd4515.smatches.mp2.service.CrmService;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,8 +29,6 @@ public class CustomerUpdateController extends HttpServlet {
 
     private static final Logger LOG = Logger.getLogger(CustomerUpdateController.class.getName());
 
-    @Inject
-    private CrmService svc;
 
     @Inject
     private Validator validator;
@@ -58,7 +55,7 @@ public class CustomerUpdateController extends HttpServlet {
       
 
         Long id = Long.parseLong(request.getParameter("id"));
-        request.setAttribute("customer", svc.findEmployee(id));
+        //request.setAttribute("customer", svc.findEmployee(id));
 
         request.getRequestDispatcher("/WEB-INF/pages/customer/customer.jsp").forward(request, response);
 
@@ -84,7 +81,7 @@ public class CustomerUpdateController extends HttpServlet {
 
         if (violations.isEmpty()) {
             // provess the update
-            svc.save(c);
+          //  svc.save(c);
             request.getRequestDispatcher("/customers").forward(request, response);
         } else {
             // not successfully validated, so send the customer and violations

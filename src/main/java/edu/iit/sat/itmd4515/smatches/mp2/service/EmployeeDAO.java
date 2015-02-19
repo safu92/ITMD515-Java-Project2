@@ -6,7 +6,6 @@
 package edu.iit.sat.itmd4515.smatches.mp2.service;
 
 import edu.iit.sat.itmd4515.smatches.mp2.model.Employee;
-import edu.iit.sat.itmd4515.smatches.mp2.repository.jdbc.JdbcEmployeeRepositoryImpl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,18 +44,16 @@ public class EmployeeDAO {
     public List<Employee> findEmployees() {
         //JDBC work here
         // return List<Customer>
-        
-         List<Employee> customers = new ArrayList<>();
-      
 
+         List<Employee> customers = new ArrayList<>();
         try (Connection c = dataSource.getConnection()) {
-if(c==null){                LOG.info("null");
-}
+           
             Statement s = c.createStatement();
-            ResultSet rs = s.executeQuery("select * from employees where emp_no=10001");
+            ResultSet rs = s.executeQuery("select * from employees");
 
             while (rs.next()) {
-                customers.add(new Employee(rs.getInt("emp_no"),
+               
+customers.add(new Employee(rs.getInt("emp_no"),
                         rs.getString("first_name"),
                         rs.getString("last_name")));
             }
@@ -64,12 +61,12 @@ if(c==null){                LOG.info("null");
         } catch (SQLException ex) {
             Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         if (customers.isEmpty()) {
             return null;
-        } else {
-            return customers;
-        }
+       } else {
+          return customers;
+      }
     }
     
     public Employee findById(Long id) {
@@ -85,10 +82,28 @@ if(c==null){                LOG.info("null");
                         rs.getString("last_name"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(JdbcEmployeeRepositoryImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;
     }
 
+    public boolean save(Employee employee) {
+        try (Connection c = dataSource.getConnection()) {
+            PreparedStatement ps = c.prepareStatement("update customer set field = ?, field2 = ? where CustomerId = ?");
+            ps.setLong(1, employee.getEmpId());
+            // and so forth
+            if (ps.executeUpdate() == 1) {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
+
+    }
+
+    
 }

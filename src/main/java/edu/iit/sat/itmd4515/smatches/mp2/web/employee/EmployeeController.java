@@ -58,14 +58,22 @@ public class EmployeeController extends HttpServlet {
         switch (request.getServletPath()) {
             case "/employees":
                 LOG.info("Dispatching to /employees");
+                int page = 0;
                     response.setContentType("text/html");
-                request.setAttribute("employees", employeeDao.findEmployees());
+                    if(request.getParameter("page")!=null){
+                    page = Integer.parseInt(request.getParameter("page"));
+                    }
+                    
+                    
+                request.setAttribute("employees", employeeDao.findEmployees(page));
                 request.getRequestDispatcher("/WEB-INF/pages/employee/employees.jsp").forward(request, response);
                 break;
            case "/employee":
              LOG.info("Dispatching to /employee");
-  if (request.getParameter("id")!=null) {
-                    Long id = Long.parseLong(request.getParameter("id"));
+                
+             if (request.getParameter("id")!=null) {
+                    Integer id = Integer.parseInt(request.getParameter("id"));
+                    //LOG.info(request.getParameter("id"));
                     request.setAttribute("employee", employeeDao.findById(id));
                     request.setAttribute("readonly", "readonly");
                 }

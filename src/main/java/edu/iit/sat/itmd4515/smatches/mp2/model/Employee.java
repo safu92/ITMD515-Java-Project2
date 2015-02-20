@@ -34,7 +34,7 @@ public class Employee {
     public Employee() {
     }
     
-    public Employee(int empId,String firstName, String lastName,Date birthDate,Date hireDate,String gender) {
+    public Employee(int empId,String firstName, String lastName,String gender,Date birthDate,Date hireDate) {
         this.gender = gender;
         this.empId = empId;
         this.birthDate = birthDate;
@@ -43,11 +43,7 @@ public class Employee {
         this.hireDate = hireDate;
     }
 
-    public Employee(int empId, String firstName, String lastName) {
-        this.empId = empId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+   
 
     public int getEmpId() {
         return empId;

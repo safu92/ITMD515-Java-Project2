@@ -3,13 +3,8 @@ package edu.iit.sat.itmd4515.smatches.mp2.web.department;
 
 import edu.iit.sat.itmd4515.smatches.mp2.model.Employee;
 import edu.iit.sat.itmd4515.smatches.mp2.service.EmployeeDAO;
-import edu.iit.sat.itmd4515.smatches.mp2.web.employee.EmployeeUpdateController;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 import java.util.Set;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -22,9 +17,9 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 
-@WebServlet(name = "EmployeeCreateController", urlPatterns = {"/employee/new"})
-public class EmployeeCreateController extends HttpServlet{
- private static final Logger LOG = Logger.getLogger(EmployeeCreateController.class.getName());
+@WebServlet(name = "EmployeeDeleteController", urlPatterns = {"/employee/del"})
+public class EmployeeDeleteController extends HttpServlet{
+ private static final Logger LOG = Logger.getLogger(EmployeeDeleteController.class.getName());
 
     
      @Resource
@@ -37,35 +32,18 @@ public class EmployeeCreateController extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        LOG.info("Dispatching to /employee/delete");
 
-        LOG.info("Dispatching to /employee/new");
+      
 
+        int id = Integer.parseInt(request.getParameter("empId"));
 
-         Integer empId = Integer.parseInt(request.getParameter("empId"));
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String gender = request.getParameter("gender");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        java.util.Date bd = null,hd = null;
-        java.sql.Date birthDate = null;
-        java.sql.Date hireDate = null;
-        try {
-            bd = sdf.parse(request.getParameter("birthDate"));
-                birthDate = new java.sql.Date(bd.getTime());
-            hd = sdf.parse(request.getParameter("hireDate"));
-                hireDate = new java.sql.Date(hd.getTime());
-            
-        } catch (ParseException ex) {
-            Logger.getLogger(EmployeeCreateController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Employee e = new Employee(empId,firstName,lastName,gender,birthDate,hireDate);
-       
         // validate it
-        Set<ConstraintViolation<Employee>> violations = validator.validate(e);
+        Set<ConstraintViolation<Integer>> violations = validator.validate(id);
 
         if (violations.isEmpty()) {
             // provess the update
-          request.setAttribute("newEmp",employeeDao.newEmployee(empId,firstName,lastName,gender,birthDate,hireDate));
+          request.setAttribute("deleteEmp",employeeDao.deleteEmployee(id));
           request.setAttribute("employees", employeeDao.findEmployees(1));
             request.getRequestDispatcher("/WEB-INF/pages/employee/employees.jsp").forward(request, response);
         } else {
@@ -74,7 +52,7 @@ public class EmployeeCreateController extends HttpServlet{
 
             LOG.info("There are " + violations.size() + " violations.");
 
-            for (ConstraintViolation<Employee> violation : violations) {
+            for (ConstraintViolation<Integer> violation : violations) {
                 LOG.info("### " + violation.getRootBeanClass().getSimpleName()
                         + "." + violation.getPropertyPath()
                         + " - Invalid Value = "
@@ -83,7 +61,7 @@ public class EmployeeCreateController extends HttpServlet{
 
             }
 
-            request.setAttribute("employees", e);
+            request.setAttribute("employee", id);
             request.setAttribute("violations", violations);
             request.getRequestDispatcher("/WEB-INF/pages/employee/employee.jsp").forward(request, response);
 

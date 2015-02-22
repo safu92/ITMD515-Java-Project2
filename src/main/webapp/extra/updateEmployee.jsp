@@ -1,26 +1,34 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add a new Employee</title>
-    </head>
-    <body>
+<%@include file="/header.jspf" %>
         <sql:setDataSource var="mydata" driver="com.mysql.jdbc.Driver"
      url="jdbc:mysql://localhost:3306/employees"
      user="smatches"  password="itmd4515"/>
         
         
         <c:if test="${param.id==null}">
-                  
+            <center>
                 <form name="updateEmployee1" method="post">
-            Enter Employee Id:<input type="text" name="id"/><br/>
-            <input type="submit" name="Submit"><br/>
+                    <table><tr><td>Enter Employee Id:</td><td><input type="text" name="id"/></td></tr></table>
+            <input type="submit" class="button" value="Submit">
+            
             </form>
+            </center>         
         </c:if>
-        <h1>Hello World!</h1>
+        
+         <sql:update dataSource="${mydata}" var="updateresult">
+        UPDATE employees set birth_date=?,first_name=?,last_name=?,gender=?,hire_date=? where emp_no=?;
+        
+            <sql:param value="${param.birthdate}" />
+            <sql:param value="${param.firstname}" />
+            <sql:param value="${param.lastname}" />
+            <sql:param value="${param.gender}" />
+            <sql:param value="${param.hiredate}" />
+        <sql:param value="${param.empno}" />
+         </sql:update>
+        
+         <c:if test="${updateresult>=1}">
+            <center><h1> <c:out value="Employee updated successfully."></c:out></h1></center>
+        </c:if>
         
         <sql:query dataSource="${mydata}" var="result">
         select * from employees where emp_no='${param.id}';
@@ -28,18 +36,35 @@
         
       
                   <c:forEach var="row" items="${result.rows}">
-   
+                      <center>
+                      <table>
             <form method="post">
-                Employee Number: <input type="number" name="empno" value="${row.emp_no}"/><br/>
-                First Name: <input type="text" name="firstname" value="${row.first_name}"/><br/>
-                Last Name:  <input type="text" name="lastname" value="${row.last_name}"/><br/>
-                Birth Date: <input type="date" name="birthdate" value="${row.birth_date}"/><br/>
-                Gender: <input type="radio" name="gender" value="M"> M <input type="radio" name="gender" value="F"> F<br/>
-                Hire Date: <input type="date" name="hiredate" value="${row.hire_date}"/><br/>
-                <input type="submit" value="Submit">
+                <tr><td>Employee Number: </td><td><input type="number" name="empno" value="${row.emp_no}" readonly/></td></tr>
+                <tr><td>First Name: </td><td><input type="text" name="firstname" value="${row.first_name}"/></td></tr>
+                <tr><td>Last Name:  </td><td><input type="text" name="lastname" value="${row.last_name}"/></td></tr>
+                <tr><td>Birth Date: </td><td><input type="date" name="birthdate" value="${row.birth_date}"/></td></tr>
+                <tr><td>Gender: </td><td>
+                         
+                    <c:if test="${row.gender =='M'}">
+                    <input type="radio" name="gender" value="M" checked />M
+                    </c:if>
+                    <c:if test="${row.gender !='M'}">
+                    <input type="radio" name="gender" value="M" />M
+                    </c:if>
+                    
+                    <c:if test="${row.gender =='F'}">
+                    <input type="radio" name="gender" value="F" checked />F
+                    </c:if>
+                    <c:if test="${row.gender !='F'}">
+                    <input type="radio" name="gender" value="F" />F
+                    </c:if>
+                    
+                    </td></tr>
+                <tr><td>Hire Date: </td><td><input type="date" name="hiredate" value="${row.hire_date}"/></td></tr></table>
+                <input type="submit" class="button" value="Submit">
             </form>
+                  </center>
                   </c:forEach>
          
-                    
-       </body>
-</html>
+        
+<%@include file="/footer.jspf" %>

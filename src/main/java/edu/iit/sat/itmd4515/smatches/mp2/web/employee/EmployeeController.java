@@ -1,19 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.iit.sat.itmd4515.smatches.mp2.web.employee;
 
 import edu.iit.sat.itmd4515.smatches.mp2.service.EmployeeDAO;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -27,15 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import javax.validation.Validator;
 
-/**
- * This is an example of a servlet becoming less of a teaching exercise and more
- * of a practical example of a controller.
- *
- * @author spyrisos
- */
 @WebServlet(name = "EmployeeController", urlPatterns = {
     "/employee",
-    "/employees"
+    "/employees",
+    "/employee/delete"
 })
 public class EmployeeController extends HttpServlet {
     
@@ -54,7 +40,7 @@ public class EmployeeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        LOG.info("Inside doGet");
+
         switch (request.getServletPath()) {
             case "/employees":
                 LOG.info("Dispatching to /employees");
@@ -80,11 +66,12 @@ public class EmployeeController extends HttpServlet {
 
                
 
-           LOG.warning("ID was not passed as a parameter.  Must be a new customer.");
-//                messages.put("No ID Error", "This is a message from your controller.  Please enter an ID.");
-//                throw new ServletException("No ID was passed.  Try again!");
 
                request.getRequestDispatcher("/WEB-INF/pages/employee/employee.jsp").forward(request, response);
+               break;
+               
+                 case "/employee/delete":
+            request.getRequestDispatcher("/WEB-INF/pages/employee/deleteEmployee.jsp").forward(request, response);
                break;
         }
 

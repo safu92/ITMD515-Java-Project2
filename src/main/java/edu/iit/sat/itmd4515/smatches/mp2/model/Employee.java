@@ -1,21 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.iit.sat.itmd4515.smatches.mp2.model;
 
 import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- * Package structure courtesy of the good folks at Spring
- *
- * https://github.com/spring-projects/spring-petclinic
- *
- * @author spyrisos
- */
+
 public class Employee {
 
    

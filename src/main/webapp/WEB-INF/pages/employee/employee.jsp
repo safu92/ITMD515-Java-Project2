@@ -1,8 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="/WEB-INF/header.jspf" %>
+<center>
 
 <h1>I am employee.jsp</h1>
-
 <c:if test="${not empty requestScope.employee}">
     <h2>${requestScope.employee.firstName} ${requestScope.employee.lastName}</h2>
 </c:if>
@@ -13,6 +13,8 @@
     <c:if test="${requestScope.employee==null}">
         <form action="${pageContext.request.contextPath}/employee/new" method="get">
     </c:if>
+            
+            </center>
         <div class="row">
             <div class="large-2 columns">
                 <label>Employee ID<br/><br/>
@@ -40,23 +42,23 @@
                 <label>Gender<br/><br/>
                     <c:if test="${employee.gender!=null}">
                     <c:if test="${employee.gender =='M'}">
-                    <input type="radio" name="gender" value="M" checked>M
+                    <input type="radio" name="gender" value="M" checked />M
                     </c:if>
                     <c:if test="${employee.gender !='M'}">
-                    <input type="radio" name="gender" value="M">M
+                    <input type="radio" name="gender" value="M" />M
                     </c:if>
                     
                     <c:if test="${employee.gender =='F'}">
-                    <input type="radio" name="gender" value="F" checked>F
+                    <input type="radio" name="gender" value="F" checked />F
                     </c:if>
                     <c:if test="${employee.gender !='F'}">
-                    <input type="radio" name="gender" value="F">F
+                    <input type="radio" name="gender" value="F" />F
                     </c:if>
                     </c:if>
                  <c:if test="${employee.gender==null}">
-                    <input type="radio" name="gender" value="M">M
+                    <input type="radio" name="gender" value="M" />M
 
-                     <input type="radio" name="gender" value="F">F
+                     <input type="radio" name="gender" value="F" />F
 
                  </c:if>
 

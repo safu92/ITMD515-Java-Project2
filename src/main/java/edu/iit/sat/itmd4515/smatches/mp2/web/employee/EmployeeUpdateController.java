@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.iit.sat.itmd4515.smatches.mp2.web.employee;
 
 import edu.iit.sat.itmd4515.smatches.mp2.model.Employee;
@@ -26,10 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
-/**
- *
- * @author spyrisos
- */
 @WebServlet(name = "EmployeeUpdateController", urlPatterns = {"/employee/update"})
 public class EmployeeUpdateController extends HttpServlet {
 
@@ -52,8 +44,6 @@ public class EmployeeUpdateController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        LOG.info("Inside doGet");
 
         
         LOG.info("Dispatching to /employee/update");

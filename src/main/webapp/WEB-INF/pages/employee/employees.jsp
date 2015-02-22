@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="/WEB-INF/header.jspf" %>
 
+<center>
 <h1>I am employees.jsp</h1>
 <c:if test="${requestScope.updateEmp}">
     <h1>Data Updated Successfuly!</h1>
@@ -9,7 +10,12 @@
        <c:if test="${requestScope.newEmp}">
     <h1>Data Inserted Successfuly!</h1>
 </c:if>
-
+    
+    
+    <c:if test="${requestScope.deleteEmp}">
+    <h1>Data Deleted Successfuly!</h1>
+</c:if>
+</center>
 <table role="grid">
     <thead>
         <tr>

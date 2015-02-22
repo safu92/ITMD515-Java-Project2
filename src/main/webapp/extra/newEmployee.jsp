@@ -1,13 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add a new Employee</title>
-    </head>
-    <body><sql:setDataSource var="mydata" driver="com.mysql.jdbc.Driver"
+<%@include file="/header.jspf" %>
+
+<sql:setDataSource var="mydata" driver="com.mysql.jdbc.Driver"
      url="jdbc:mysql://localhost:3306/employees"
      user="smatches"  password="itmd4515"/>
         
@@ -16,7 +10,7 @@
        <c:if test="${pageContext.request.method=='POST'}">
 
            
-        <h1>Hello World!</h1>
+       
         
         <sql:update dataSource="${mydata}" var="result">
         INSERT into employees values(?,?,?,?,?,?);
@@ -29,17 +23,26 @@
         </sql:update>
         
         <c:if test="${result>=1}">
-            <c:out value="Data inserted successfully."></c:out>
+            <center><h1> <c:out value="Employee added successfully."></c:out></h1></center>
         </c:if>
        </c:if>
         <form method="post">
-            Employee Number: <input type="number" name="empno"/><br/>
-    First Name: <input type="text" name="firstname" /><br/>
-  Last Name:  <input type="text" name="lastname" /><br/>
-  Birth Date: <input type="date" name="birthdate" /><br/>
-  Gender: <input type="radio" name="gender" value="M"> M <input type="radio" name="gender" value="F"> F<br/>
-  Hire Date: <input type="date" name="hiredate" /><br/>
-  <input type="submit" value="Submit">
+            <center>
+            <table><tr><td>
+                        Employee Number: </td><td><input type="number" name="empno"/><br/></td></tr>
+                <tr><td>
+                        First Name: </td><td><input type="text" name="firstname" /><br/></td></tr>
+                <tr><td>
+                        Last Name:  </td><td><input type="text" name="lastname" /><br/></td></tr>
+                <tr><td>
+                        Birth Date (yyyy-mm-dd): </td><td><input type="date" name="birthdate" /><br/></td></tr>
+                <tr><td>
+                        Gender: </td><td><input type="radio" name="gender" value="M"> M <input type="radio" name="gender" value="F"> F<br/></td></tr>
+                <tr> <td> Hire Date (yyyy-mm-dd): </td> <td><input type="date" name="hiredate" /><br/></td></tr>
+            </table>
+  <input type="submit" class="button" value="Submit">
+  </center>
         </form>
-    </body>
-</html>
+   
+        
+        <%@include file="/footer.jspf" %>

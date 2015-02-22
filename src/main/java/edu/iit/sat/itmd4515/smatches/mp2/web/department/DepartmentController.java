@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.iit.sat.itmd4515.smatches.mp2.web.department;
 
 import edu.iit.sat.itmd4515.smatches.mp2.service.DepartmentDAO;
@@ -41,7 +37,6 @@ public class DepartmentController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        LOG.info("Inside doGet");
         switch (request.getServletPath()) {
             case "/departments":
                 LOG.info("Dispatching to /departments");
@@ -57,9 +52,6 @@ public class DepartmentController extends HttpServlet {
               request.setAttribute("readonly", "readonly");
         }
 
-           LOG.warning("ID was not passed as a parameter.  Must be a new department.");
-//                messages.put("No ID Error", "This is a message from your controller.  Please enter an ID.");
-//                throw new ServletException("No ID was passed.  Try again!");
 
                request.getRequestDispatcher("/WEB-INF/pages/department/department.jsp").forward(request, response);
                break;

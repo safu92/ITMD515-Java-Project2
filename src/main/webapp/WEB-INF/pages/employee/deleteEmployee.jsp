@@ -1,15 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="/WEB-INF/header.jspf" %>
+
 <center>
-<h1>I am department.jsp</h1>
+<h1>I am delete Employee.jsp</h1>
 </center>
    
-        <form action="${pageContext.request.contextPath}/department/del" method="get">
+        <form action="${pageContext.request.contextPath}/employee/del" method="get">
         <div class="row">
             <div class="large-6 columns">
-                <label>Department ID
+                <label>Employee ID
                    
-                    <input type="text" placeholder="Department ID" id="deptId" name="deptId" value="${department.deptId}"/>
+                    <input type="text" placeholder="Employee ID" id="empId" name="empId"/>
                 </label>
             </div>
             

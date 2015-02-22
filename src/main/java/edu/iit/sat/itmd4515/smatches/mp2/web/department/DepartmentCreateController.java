@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.iit.sat.itmd4515.smatches.mp2.web.department;
 
 import edu.iit.sat.itmd4515.smatches.mp2.model.Department;
@@ -36,17 +32,11 @@ public class DepartmentCreateController extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        LOG.info("Inside doGet");
 
         LOG.info("Dispatching to /department/new");
 
       
 
-    //    String id = request.getParameter("deptId");
-     //   String name = request.getParameter("deptName");
-        //request.setAttribute("customer", svc.findEmployee(id));
-
-      //  request.getRequestDispatcher("/WEB-INF/pages/department/department.jsp").forward(request, response);
         String id = request.getParameter("deptId");
         String name = request.getParameter("deptName");
         

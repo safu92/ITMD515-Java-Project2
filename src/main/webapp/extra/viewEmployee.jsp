@@ -1,24 +1,18 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<%@include file="/header.jspf" %>
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
         <sql:setDataSource var="mydata" driver="com.mysql.jdbc.Driver"
      url="jdbc:mysql://localhost:3306/employees"
      user="smatches"  password="itmd4515"/>
-                     <c:if test="${pageContext.request.method=='POST'}">
-
+        
+        <c:if test="${param.page == null || param.page < 0}">
+        <c:set var="page" value="0"></c:set>
+        </c:if>
         <sql:query dataSource="${mydata}" var="result">
-        SELECT * from employees where emp_no='${param.id}';
+        SELECT * from employees limit ${param.page}0,10;
         </sql:query>
-        <h1>Hello World!</h1>
-                     <table border="1" width="100%">
+        
+                     <table width="100%">
 <tr>
 <th>Emp ID</th>
 <th>First Name</th>
@@ -38,11 +32,24 @@
 </tr>
 </c:forEach>
 </table>
-             </c:if>
-        <form name="viewEmployee" method="post">
-            Enter Employee Id:<input type="text" name="id"/><br/>
-            <input type="submit" name="Submit"><br/>
-            
-        </form>
-    </body>
-</html>
+        
+        
+        
+         <ul class="pagination" role="menubar" aria-label="Pagination">
+       
+       
+       <c:if test="${(param.page == null) || (param.page==1)}">
+       <li class="arrow unavailable" aria-disabled="true"><a href="">&laquo; Previous</a></li>    
+       <li class="current"><a href="">1</a></li> 
+       <li class="arrow"><a href="?page=2">Next &raquo;</a></li> 
+       </c:if>
+       
+       <c:if test="${(param.page != 1) && (param.page!=null)}">
+       <li class="arrow"><a href="?page=${param.page - 1}">&laquo; Previous</a></li>
+       <li class="current"><a href="">${param.page}</a></li> 
+       <li class="arrow"><a href="?page=${param.page + 1}">Next &raquo;</a></li> 
+       </c:if>
+       
+        
+   </ul>
+<%@include file="/footer.jspf" %>

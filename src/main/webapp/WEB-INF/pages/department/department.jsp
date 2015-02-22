@@ -1,9 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="/WEB-INF/header.jspf" %>
 
-<center>
-<h1>I am department.jsp</h1>
-</center>
+<br/>
 
 <c:if test="${not empty requestScope.department}">
     <h2>${requestScope.department.deptId} ${requestScope.department.deptName}</h2>

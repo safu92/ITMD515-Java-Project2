@@ -1,9 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="/WEB-INF/header.jspf" %>
-<center>
-<h1>I am department.jsp</h1>
-</center>
-   
+<br/>
         <form action="${pageContext.request.contextPath}/department/del" method="get">
         <div class="row">
             <div class="large-6 columns">

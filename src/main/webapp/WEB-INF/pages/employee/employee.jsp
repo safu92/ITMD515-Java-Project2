@@ -2,7 +2,7 @@
 <%@include file="/WEB-INF/header.jspf" %>
 <center>
 
-<h1>I am employee.jsp</h1>
+<br/>
 <c:if test="${not empty requestScope.employee}">
     <h2>${requestScope.employee.firstName} ${requestScope.employee.lastName}</h2>
 </c:if>
